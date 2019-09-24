@@ -2,6 +2,14 @@
  * @link http://www.bubuko.com/infodetail-2709032.html
  * @link https://redis.io/topics/lru-cache
  */
+#define REDIS_MAXMEMORY_VOLATILE_LRU "从添加了过期时间的数据中查找最近最少使用的值"
+#define REDIS_MAXMEMORY_VOLATILE_TTL "从添加了过期时间的数据中挑选即将过期的值"
+#define REDIS_MAXMEMORY_VOLATILE_RANDOM "从添加了过期时间的数据中随机挑选值"
+#define REDIS_MAXMEMORY_ALLKEYS_RANDOM "从所有数据中随机挑选值"
+#define REDIS_MAXMEMORY_ALLKEYS_LRU "从所有数据中查找最近最少使用的值"
+#define REDIS_MAXMEMORY_NO_EVICTION "禁止淘汰数据,关闭 redis 内存超标时的自动清理内存"
+#define REDIS_OK "redis 中的一种状态，表示 OK"
+#define REDIS_ERR "redis 中的一种状态，表示 ERROR"
 
 int freeMemoryIfNeeded(void)
 {
@@ -15,8 +23,8 @@ int freeMemoryIfNeeded(void)
 	mem_used = zmalloc_used_memory();
 	if (slaves)
 	{
-		listIter li;
-		listNode *ln;
+		listIter li;  // list 链表迭代器
+		listNode *ln; // list 链表节点
 
 		listRewind(server.slaves, &li);
 		while ((ln = listNext(&li)))
@@ -34,16 +42,18 @@ int freeMemoryIfNeeded(void)
 		mem_used -= sdslen(server.aofbuf);
 		mem_used -= sdslen(server.bgrewritebuf);
 	}
-	//判断已经使用内存是否超过最大使用内存，如果没有超过就返回REDIS_OK，
 	/* Check if we are over the memory limit. */
+	//判断已经使用内存是否超过最大使用内存，如果没有超过就返回REDIS_OK，
 	if (mem_used <= server.maxmemory)
 		return REDIS_OK;
-	//当超过了最大使用内存时，就要判断此时redis到底采用的是那种内存释放策略，根据不同的策略，采取不同的手段。
-	//（1）首先判断是否是为 'no-enviction / 禁止淘汰数据' 策略，如果是，则返回REDIS_ERR,然后redis就不再接受任何写命令了。
+	// 当超过了最大使用内存时，就要判断此时redis到底采用的是那种内存释放策略，根据不同的策略，采取不同的手段。
+	// 首先判断是否是为 'no-enviction / 禁止淘汰数据' 策略，
+	// 如果是，则返回REDIS_ERR,然后redis就不再接受任何写命令了。
 	if (server.maxmemory_policy == REDIS_MAXMEMORY_NO_EVICTION)
 		return REDIS_ERR; /* We need to free memory, but policy forbids. */
 
 	/* Compute how much memory we need to free. */
+	// 计算需要释放的内存
 	mem_tofree = mem_used - server.maxmemory;
 	mem_freed = 0;
 
@@ -53,14 +63,14 @@ int freeMemoryIfNeeded(void)
 
 		for (j = 0; j < server.dbnum; j++)
 		{
-			long bestval = 0; /* just to prevent warning */
-			sds bestkey = NULL;
+			long bestval = 0;   /* just to prevent warning */
+			sds bestkey = NULL; //动态字符串
 			struct dictEntry *de;
 			redisDb *db = server.db + j;
 			dict *dict;
 			// 判断淘汰策略是 Allkeys 还是 Volatile
-			// 如果是针对所有的键，就从server.db[j].dict中取数据，
-			// 如果是针对设置了过期时间的键，就从server.db[j].expires中取数据。
+			// if (Allkeys)	 从 server.db[j].dict	 中取数据，
+			// if (Volatile) 从 server.db[j].expires 中取数据。
 			if (server.maxmemory_policy == REDIS_MAXMEMORY_ALLKEYS_LRU ||
 				server.maxmemory_policy == REDIS_MAXMEMORY_ALLKEYS_RANDOM)
 			{
@@ -73,8 +83,8 @@ int freeMemoryIfNeeded(void)
 			if (dictSize(dict) == 0)
 				continue;
 
-			// 然后判断是不是random策略，包括volatile-random 和allkeys-random，
-			// 这两种策略是最简单的，就是在上面的数据集中随便去一个键，然后删掉。
+			// 判断是否为 random 策略, volatile-random OR allkeys-random
+			// 这种策略是最简单的，就是在数据集中随便取一个键，然后删掉。
 			if (server.maxmemory_policy == REDIS_MAXMEMORY_ALLKEYS_RANDOM ||
 				server.maxmemory_policy == REDIS_MAXMEMORY_VOLATILE_RANDOM)
 			{
@@ -82,8 +92,8 @@ int freeMemoryIfNeeded(void)
 				bestkey = dictGetEntryKey(de);
 			} // 如果是random delete,则从dict中随机选一个key
 
-			// 然后就是判断是lru策略还是ttl策略
-			// 如果是lru策略就采用lru近似算法
+			// 判断是 lru 策略还是 ttl 策略
+			// 如果是 lru 就采用 lru 近似算法
 			/* volatile-lru and allkeys-lru policy */
 			else if (server.maxmemory_policy == REDIS_MAXMEMORY_ALLKEYS_LRU ||
 					 server.maxmemory_policy == REDIS_MAXMEMORY_VOLATILE_LRU)
@@ -96,17 +106,17 @@ int freeMemoryIfNeeded(void)
 
 					de = dictGetRandomKey(dict);   // 获取一个随机值
 					thiskey = dictGetEntryKey(de); // 获取这个值的 key
-					// 当策略是volatile-lru时，需要一次额外的查找来定位真正的键，因为dict被设置为 db->expires。
 					/* When policy is volatile-lru we need an additonal lookup
                      * to locate the real key, as dict is set to db->expires. */
+					// 当策略是 volatile-lru 时，需要一次额外的查找来定位真正的键,因为dict被设置为 db->expires。
 					if (server.maxmemory_policy == REDIS_MAXMEMORY_VOLATILE_LRU)
 						// 因为dict->expires维护的数据结构里并没有记录该key的最后访问时间
 						de = dictFind(db->dict, thiskey);
 					o = dictGetEntryVal(de);			 // 获取上一个 key 所指向的对象
 					thisval = estimateObjectIdleTime(o); // 获得对象的空闲时间
 
-					// 更高空闲时间的值(也就是访问量较少的值),更适合被删除
 					/* Higher idle time is better candidate for deletion */
+					// 更高空闲时间的值(也就是访问量较少的值),更适合被删除
 					if (bestkey == NULL || thisval > bestval)
 					{
 						bestkey = thiskey;
@@ -116,8 +126,8 @@ int freeMemoryIfNeeded(void)
 				// 为了减少运算量,redis的lru算法和expire淘汰算法一样，都是非最优解
 				// lru算法是在相应的dict中，选择maxmemory_samples(默认设置是3)份key，挑选其中lru的，进行淘汰
 			}
-			// 如果是ttl策略。ttl策略很简单，就是取maxmemory_samples个键
-			// 然后比较他们的过期时间，然后从这些键中找到最快过期的那个键，就是我们将要删除的键。
+			// 如果是ttl策略。就取maxmemory_samples个键, 比较他们的过期时间
+			// 从这些键中找到最快过期的那个键，就是我们将要删除的键。
 			/* volatile-ttl */
 			else if (server.maxmemory_policy == REDIS_MAXMEMORY_VOLATILE_TTL)
 			{
@@ -130,9 +140,9 @@ int freeMemoryIfNeeded(void)
 					thiskey = dictGetEntryKey(de);
 					thisval = (long)dictGetEntryVal(de);
 
-					// 从取出的 maxmemory_samples 个对象中，找到过期时间(按 秒 来储存)最小的那个
 					/* Expire sooner (minor expire unix timestamp) is better
                      * candidate for deletion */
+					// 从取出的 maxmemory_samples 个对象中，找到过期时间(按 秒 来储存)最小的那个
 					if (bestkey == NULL || thisval < bestval)
 					{
 						bestkey = thiskey;
@@ -181,7 +191,8 @@ int freeMemoryIfNeeded(void)
 				if (slaves)
 					flushSlavesOutputBuffers();
 			}
-		} //在所有的db中遍历一遍，然后判断删除的key释放的空间是否足够，未能释放空间，且此时redis 使用的内存大小依旧超额，失败返回
+		}
+		// 在所有的db中遍历一遍，然后判断删除的key释放的空间是否足够，未能释放空间，且此时redis 使用的内存大小依旧超额，失败返回
 		if (!keys_freed)
 			return REDIS_ERR; /* nothing to free... */
 	}
