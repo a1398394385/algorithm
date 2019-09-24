@@ -1,7 +1,7 @@
-/* @link https://redis.io/topics/lru-cache */
-
-
-
+/**
+ * @link http://www.bubuko.com/infodetail-2709032.html
+ * @link https://redis.io/topics/lru-cache
+ */
 
 int freeMemoryIfNeeded(void) {
     size_t mem_used, mem_tofree, mem_freed;
