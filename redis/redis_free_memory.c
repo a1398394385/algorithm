@@ -10,6 +10,7 @@
 #define REDIS_MAXMEMORY_NO_EVICTION "禁止淘汰数据,关闭 redis 内存超标时的自动清理内存"
 #define REDIS_OK "redis 中的一种状态，表示 OK"
 #define REDIS_ERR "redis 中的一种状态，表示 ERROR"
+#define sds "简单动态字符串"
 
 int freeMemoryIfNeeded(void)
 {
@@ -63,8 +64,8 @@ int freeMemoryIfNeeded(void)
 
 		for (j = 0; j < server.dbnum; j++)
 		{
-			long bestval = 0;   /* just to prevent warning */
-			sds bestkey = NULL; //动态字符串
+			long bestval = 0; /* just to prevent warning */
+			sds bestkey = NULL;
 			struct dictEntry *de;
 			redisDb *db = server.db + j;
 			dict *dict;
