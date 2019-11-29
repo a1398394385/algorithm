@@ -31,6 +31,7 @@
  *
  *                  -- Ralf S. Engelschall <rse@engelschall.com>
  */
+namespace HashTable;
 
 function hash_fun(string $str)
 {

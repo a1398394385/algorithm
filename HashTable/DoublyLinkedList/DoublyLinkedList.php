@@ -4,8 +4,9 @@ namespace HashTable\DoublyLinkedList;
 
 require '../vendor/autoload.php';
 
-use HashTable\Core\StoreOperation;
 use HashTable\HashTable\Bucket;
+use function HashTable\hash_fun;
+use HashTable\Core\StoreOperation;
 
 /**
  * Class DoublyLinkedList
@@ -44,8 +45,11 @@ class DoublyLinkedList implements StoreOperation
      * @return mixed
      * @author XiaoYunSong
      */
-    public function create($key, $value): void
+    public function create($key, $value): bool
     {
+        if (!empty($this->search($key)))
+            return false;
+
         $node = new DoublyLinkedListNode(
             new Bucket(
                 hash_fun($key),
@@ -65,6 +69,7 @@ class DoublyLinkedList implements StoreOperation
         }
 
         $this->listLenght += 1;
+        return true;
     }
 
     /**
@@ -118,7 +123,7 @@ class DoublyLinkedList implements StoreOperation
     public function search($key): array
     {
         $result = [];
-        if ($this->lastNode->data->key == $key) {
+        if ($this->lastNode && $this->lastNode->data && $this->lastNode->data->key == $key) {
             $result[$key] = $this->lastNode->data->value;
         } else {
             $node = $this->headNode;
@@ -131,6 +136,23 @@ class DoublyLinkedList implements StoreOperation
                 }
                 $node = $node->nextNode;
             }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @author XiaoYunSong
+     */
+    public function allData()
+    {
+        $result = [];
+        $node = $this->headNode;
+        while ($node) {
+            if ($node->data) {
+                $result[$node->data->key] = $node->data->value;
+            }
+            $node = $node->nextNode;
         }
 
         return $result;

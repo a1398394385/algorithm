@@ -4,19 +4,21 @@ namespace HashTable\HashTable;
 
 require '../vendor/autoload.php';
 
+use function HashTable\hash_fun;
 use HashTable\Core\StoreOperation;
+use function PHPSTORM_META\argumentsSet;
 
 class HashTable implements StoreOperation
 {
     /**
      * HashTable_hashNode_array
      *
-     * @var \SplFixedArray $arHash
+     * @var HashNode[] $arHash
      */
-    public $arHash;
+    private $arHash;
 
     /**
-     * HashTable_memory_space_used_number
+     * HashTable_memory_space_used_number ( Maybe we don't need this? )
      *
      * @var int $nNumUsed
      */
@@ -37,14 +39,14 @@ class HashTable implements StoreOperation
     private $nNumOfNode;
 
     /**
-     * HashTable_size - 1
+     * HashTable_size - 1, Used for &
      *
      * @var int $nTableMask
      */
     private $nTableMask;
 
     /**
-     * $nTableMask - ($nTableSize / 2)
+     * Size of table before last expansion
      *
      * @var int $nOldTableMask
      */
@@ -72,46 +74,54 @@ class HashTable implements StoreOperation
     }
 
     /**
+     * Add new data to the HashTable
+     *
      * @param $key
      * @param $value
      * @return mixed
      * @author XiaoYunSong
      */
-    public function create($key, $value): void
+    public function create($key, $value): bool
     {
         $hash      = hash_fun((string)$key);
         $hashIndex = $hash & $this->nTableMask;
         if ($this->arHash[$hashIndex]) {
             if ($this->arHash[$hashIndex]->hashTableSize == $this->nTableSize) {
-                $this->arHash[$hashIndex]->create($key, $value);
+                if (!$this->arHash[$hashIndex]->create($key, $value))
+                    return false;
+
+                $this->nNumOfElements += 1;
             } else {
-                $this->moveNode($hashIndex)->create($key, $value);
+
+                return $this->moveNode($hashIndex)->create($key, $value);
             }
         } else {
             $this->arHash[$hashIndex] = new HashNode(
                 new Bucket($hash, $key, $value),
                 $this->nTableSize
             );
-            $this->nNumOfNode  += 1;
+            $this->nNumOfNode += 1;
+            $this->nNumOfElements += 1;
             if ($hashIndex > $this->nOldTableMask) {
-                $this->moveNode($hashIndex - $this->nOldTableMask);
+                $this->moveNode($hashIndex - ($this->nOldTableMask + 1));
             }
         }
-
-        $this->nNumUsed       += 1;
-        $this->nNumOfElements += 1;
 
         // loadFactor == 1, capacity to double
         if ($this->nNumOfNode == $this->nTableSize)
             $this->capacity();
+
+        return true;
     }
 
     /**
+     * Delete nodes with the same key
+     *
      * @param $key
      * @return mixed
      * @author XiaoYunSong
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $hash = hash_fun($key);
         if ($this->arHash[$hash & $this->nTableMask]) {
@@ -122,12 +132,14 @@ class HashTable implements StoreOperation
     }
 
     /**
+     * Update nodes with the same key
+     *
      * @param $key
      * @param $value
      * @return mixed
      * @author XiaoYunSong
      */
-    public function update($key, $value)
+    public function update($key, $value): bool
     {
         $hash = hash_fun($key);
         if ($this->arHash[$hash & $this->nTableMask]) {
@@ -138,27 +150,37 @@ class HashTable implements StoreOperation
     }
 
     /**
+     * Search for nodes with the same key
+     *
      * @param $key
-     * @return bool
+     * @return array
      * @author XiaoYunSong
      */
-    public function search($key)
+    public function search($key): array
     {
         $hash = hash_fun($key);
         if ($this->arHash[$hash & $this->nTableMask]) {
             return $this->arHash[$hash & $this->nTableMask]->search($key);
+        } else if ($this->arHash[$hash & $this->nOldTableMask]->hashTableSize != $this->nTableSize) {
+            return $this->moveNode($hash & $this->nOldTableMask)->search($key);
         }
 
-        return false;
+        return [];
     }
 
+    /**
+     * HashTable expansion, $nTableSize *= 2
+     *
+     * @return $this
+     * @author XiaoYunSong
+     */
     public function capacity()
     {
         try {
             $this->arHash->setSize($this->nTableSize + $this->nTableSize);
-            $this->nTableSize += $this->nTableSize;
+            $this->nTableSize    += $this->nTableSize;
             $this->nOldTableMask = $this->nTableMask;
-            $this->nTableMask = $this->nTableSize - 1;
+            $this->nTableMask    = $this->nTableSize - 1;
         } catch (\InvalidArgumentException $e) {
             die($e->getMessage());
         } catch (\Exception $e) {
@@ -168,9 +190,43 @@ class HashTable implements StoreOperation
         return $this;
     }
 
+    /**
+     * Rehash the old hash node
+     *
+     * @param $index
+     * @return $this
+     * @author XiaoYunSong
+     */
     public function moveNode($index)
     {
-        //
+        if ($this->arHash[$index] && $this->arHash[$index]->hashTableSize != $this->nTableSize) {
+            $moveDataArr          = array_reverse($this->arHash[$index]->allData());
+            $this->arHash[$index] = null;
+            $this->nNumOfNode     -= 1;
+            foreach ($moveDataArr as $key => $value) {
+                $this->nNumOfElements -= 1;
+                $this->create($key, $value);
+            }
+        }
+
         return $this;
+    }
+
+    /**
+     * Gets all the data in the HashTable
+     *
+     * @return array
+     * @author XiaoYunSong
+     */
+    public function allData()
+    {
+        $result = [];
+        for ($i = 0; $i < $this->nTableSize; $i++) {
+            if ($this->arHash[$i]) {
+                $result = array_merge($result, $this->arHash[$i]->allData());
+            }
+        }
+
+        return $result;
     }
 }

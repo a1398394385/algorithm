@@ -12,4 +12,6 @@ interface StoreOperation
     public function update($key, $value);
 
     public function search($key);
+
+    public function allData();
 }
