@@ -351,7 +351,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="7" selection-start-column="1" selection-end-column="7" />
@@ -366,4 +365,3 @@
       </provider>
     </entry>
   </component>
-</project>
