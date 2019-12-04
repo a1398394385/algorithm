@@ -4,7 +4,7 @@ namespace HashTable\HashTable;
 
 require '../vendor/autoload.php';
 
-use function HashTable\hash_fun;
+use function HashTable\getHash;
 use HashTable\Core\StoreOperation;
 use function PHPSTORM_META\argumentsSet;
 
@@ -36,7 +36,7 @@ class HashTable implements StoreOperation
      *
      * @var int $nNumOfBucket
      */
-    private $nNumOfNode;
+    public $nNumOfNode;
 
     /**
      * HashTable_size - 1, Used for &
@@ -57,7 +57,7 @@ class HashTable implements StoreOperation
      *
      * @var int $nTableSize
      */
-    private $nTableSize;
+    public $nTableSize;
 
     /**
      * HashTable constructor.
@@ -83,7 +83,7 @@ class HashTable implements StoreOperation
      */
     public function create($key, $value): bool
     {
-        $hash      = hash_fun((string)$key);
+        $hash      = getHash((string)$key);
         $hashIndex = $hash & $this->nTableMask;
         if ($this->arHash[$hashIndex]) {
             if ($this->arHash[$hashIndex]->hashTableSize == $this->nTableSize) {
@@ -103,7 +103,10 @@ class HashTable implements StoreOperation
             $this->nNumOfNode += 1;
             $this->nNumOfElements += 1;
             if ($hashIndex > $this->nOldTableMask) {
-                $this->moveNode($hashIndex - ($this->nOldTableMask + 1));
+                $oldHashIndex = $hashIndex - ($this->nOldTableMask + 1);
+                if ($this->arHash[$oldHashIndex] && $this->arHash[$oldHashIndex]->hashTableSize!= $this->nTableSize) {
+                    $this->moveNode($hashIndex - ($this->nOldTableMask + 1));
+                }
             }
         }
 
@@ -123,9 +126,17 @@ class HashTable implements StoreOperation
      */
     public function delete($key): bool
     {
-        $hash = hash_fun($key);
+        $hash = getHash($key);
         if ($this->arHash[$hash & $this->nTableMask]) {
-            return $this->arHash[$hash & $this->nTableMask]->delete($key);
+            if ($this->arHash[$hash & $this->nTableMask]->delete($key)) {
+                $this->nNumOfElements -= 1;
+                return true;
+            }
+        } else if ($this->arHash[$hash & $this->nOldTableMask]->hashTableSize != $this->nTableSize) {
+            if ($this->moveNode($hash & $this->nOldTableMask)->delete($key)) {
+                $this->nNumOfElements -= 1;
+                return true;
+            }
         }
 
         return false;
@@ -139,14 +150,16 @@ class HashTable implements StoreOperation
      * @return mixed
      * @author XiaoYunSong
      */
-    public function update($key, $value): bool
+    public function update($key, $value): array
     {
-        $hash = hash_fun($key);
+        $hash = getHash($key);
         if ($this->arHash[$hash & $this->nTableMask]) {
             return $this->arHash[$hash & $this->nTableMask]->update($key, $value);
+        } else if ($this->arHash[$hash & $this->nOldTableMask]->hashTableSize != $this->nTableSize) {
+            return $this->moveNode($hash & $this->nOldTableMask)->update($key, $value);
         }
 
-        return false;
+        return [];
     }
 
     /**
@@ -158,7 +171,7 @@ class HashTable implements StoreOperation
      */
     public function search($key): array
     {
-        $hash = hash_fun($key);
+        $hash = getHash($key);
         if ($this->arHash[$hash & $this->nTableMask]) {
             return $this->arHash[$hash & $this->nTableMask]->search($key);
         } else if ($this->arHash[$hash & $this->nOldTableMask]->hashTableSize != $this->nTableSize) {
@@ -169,7 +182,7 @@ class HashTable implements StoreOperation
     }
 
     /**
-     * HashTable expansion, $nTableSize *= 2
+     * HashTable expansion, nTableSize *= 2
      *
      * @return $this
      * @author XiaoYunSong

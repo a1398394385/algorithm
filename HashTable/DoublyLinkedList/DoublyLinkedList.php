@@ -5,7 +5,7 @@ namespace HashTable\DoublyLinkedList;
 require '../vendor/autoload.php';
 
 use HashTable\HashTable\Bucket;
-use function HashTable\hash_fun;
+use function HashTable\getHash;
 use HashTable\Core\StoreOperation;
 
 /**
@@ -52,7 +52,7 @@ class DoublyLinkedList implements StoreOperation
 
         $node = new DoublyLinkedListNode(
             new Bucket(
-                hash_fun($key),
+                getHash($key),
                 $key,
                 $value
             ),
@@ -60,8 +60,7 @@ class DoublyLinkedList implements StoreOperation
         );
 
         if (!$this->headNode) {
-            $this->headNode = $node;
-            $this->lastNode = $node;
+            $this->headNode = $this->lastNode = $node;
         } else {
             $this->headNode->lastNode = $node;
             $node->nextNode = $this->headNode;
@@ -99,20 +98,22 @@ class DoublyLinkedList implements StoreOperation
      * @return mixed
      * @author XiaoYunSong
      */
-    public function update($key, $value): bool
+    public function update($key, $value): array
     {
+        $result = [];
         $node = $this->headNode;
         while ($node) {
             if ($node->data) {
                 if ($node->data->key == $key) {
                     $node->data->value = $value;
-                    return true;
+                    $result[$key] = $value;
+                    break;
                 }
             }
             $node = $node->nextNode;
         }
 
-        return false;
+        return $result;
     }
 
     /**

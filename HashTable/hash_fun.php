@@ -31,27 +31,88 @@
  *
  *                  -- Ralf S. Engelschall <rse@engelschall.com>
  */
+
 namespace HashTable;
 
-function hash_fun(string $str)
+/**
+ * Gets the hash value of the string
+ *
+ * @param string $str
+ * @return int
+ * @author XiaoYunSong
+ */
+function getHash(string $str)
 {
-    $hash = 5381;
-    $arr = str_split($str);
-    $arr = array_map(function ($value) {
+    $hash   = 5381;
+    $arr    = str_split($str);                  // string to array
+    $arr    = array_map(function ($value) {     // char to ASCII
         return ord($value);
     }, $arr);
     $lenght = count($arr);
-    $index = $lenght - 1;
+    $index  = $lenght - 1;
 
     while ($lenght >= 8) {
-        $hash = (($hash << 5) + $hash) + $arr[$index--];
-        $hash = (($hash << 5) + $hash) + $arr[$index--];
-        $hash = (($hash << 5) + $hash) + $arr[$index--];
-        $hash = (($hash << 5) + $hash) + $arr[$index--];
-        $hash = (($hash << 5) + $hash) + $arr[$index--];
-        $hash = (($hash << 5) + $hash) + $arr[$index--];
-        $hash = (($hash << 5) + $hash) + $arr[$index--];
-        $hash = (($hash << 5) + $hash) + $arr[$index--];
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;   // We only need the lower 32 bits
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        $lenght -= 8;
+    }
+
+    switch ($lenght) {
+        case 7:
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        case 6:
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        case 5:
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        case 4:
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        case 3:
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        case 2:
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        case 1:
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+            break;
+        case 0:
+            break;
+    }
+
+    return $hash;
+}
+// bindec(substr(decbin((($hash + ($hash << 5)) + $arr[$index--])), -32, 32));
+
+/**
+ * old hash fuctiong
+ *
+ * @param string $str
+ * @return int
+ * @author XiaoYunSong
+ */
+function hash_fun(string $str)
+{
+    $hash   = 5381;
+    $arr    = str_split($str);
+    $arr    = array_map(function ($value) {
+        return ord($value);
+    }, $arr);
+    $lenght = count($arr);
+    $index  = $lenght - 1;
+
+    while ($lenght >= 8) {
+        $hash   = (($hash << 5) + $hash) + $arr[$index--];
+        $hash   = (($hash << 5) + $hash) + $arr[$index--];
+        $hash   = (($hash << 5) + $hash) + $arr[$index--];
+        $hash   = (($hash << 5) + $hash) + $arr[$index--];
+        $hash   = (($hash << 5) + $hash) + $arr[$index--];
+        $hash   = (($hash << 5) + $hash) + $arr[$index--];
+        $hash   = (($hash << 5) + $hash) + $arr[$index--];
+        $hash   = (($hash << 5) + $hash) + $arr[$index--];
         $lenght -= 8;
     }
 

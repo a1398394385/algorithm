@@ -1,7 +1,9 @@
 {
   "require": {
     "php": ">=7.0",
-    "symfony/var-dumper": "^5.0"
+    "symfony/var-dumper": "^5.0",
+    "ext-json": "*",
+    "fzaninotto/faker": "^1.9"
   },
   "autoload": {
     "classmap": [

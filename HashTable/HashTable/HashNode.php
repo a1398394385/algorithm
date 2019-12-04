@@ -6,7 +6,7 @@ require '../vendor/autoload.php';
 
 use HashTable\Core\Node;
 use HashTable\Tree\Tree;
-use function HashTable\hash_fun;
+use function HashTable\getHash;
 use HashTable\Core\StoreOperation;
 use HashTable\DoublyLinkedList\DoublyLinkedList;
 
@@ -34,7 +34,7 @@ class HashNode extends Node implements StoreOperation
     public function create($key, $value): bool
     {
         if (!$this->data) {
-            $this->data = new Bucket(hash_fun($key), $key, $value);
+            $this->data = new Bucket(getHash($key), $key, $value);
             return true;
         } else {
             if ($this->data instanceof Bucket) {
@@ -75,16 +75,19 @@ class HashNode extends Node implements StoreOperation
      * @return mixed
      * @author XiaoYunSong
      */
-    public function update($key, $value): bool
+    public function update($key, $value): array
     {
+        $result = [];
         if ($this->data instanceof Bucket) {
-            if ($this->data->key == $key)
+            if ($this->data->key == $key) {
                 $this->data->value = $value;
+                $result[$key] = $value;
+            }
         } else {
             return $this->data->update($key, $value);
         }
 
-        return true;
+        return $result;
     }
 
     /**
