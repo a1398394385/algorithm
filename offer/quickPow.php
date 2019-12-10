@@ -29,6 +29,27 @@ function QuickPow(int $x, int $n)
 }
 
 /**
+ * 整数快速乘
+ *
+ * @param int $x 整数
+ * @param int $n 倍数
+ */
+function QuickMul(int $x, int $n)
+{
+    $res = $x;
+    $ans = 0;
+    while ($n) {
+        if ($n & 1) {
+            $ans += $res;
+        }
+        $res = $res << 1;
+        $n = $n >> 1;
+    }
+
+    return $ans;
+}
+
+/**
  * 矩阵乘法
  *
  * @param array $a 矩阵 A
@@ -121,15 +142,15 @@ function FibonacciMatrixQuickPow(int $number)
     return $result[0][1];
 }
 
-$number = (int) getopt('a:')['a'];
+// $number = (int) getopt('a:')['a'];
 
 // $inside  = 10000;
-$start = microtime(true);
+// $start = microtime(true);
 // $i = $inside;
 // while ($i--) {
-FibonacciMatrixQuickPow($number);
+// FibonacciMatrixQuickPow($number);
 // }
-printf("Used %s S\n", microtime(true) - $start);
+// printf("Used %s S\n", microtime(true) - $start);
 // dd(MatrixQuickPow(
 //     [
 //         [1, 1],
@@ -137,9 +158,20 @@ printf("Used %s S\n", microtime(true) - $start);
 //     ],
 //     1000
 // ));
-// $start = microtime(true);
-// $i = 100000;
-// while ($i--) {
-//     QuickPow(6, 12);
-// }
-// printf("Used %s S\n", microtime(true) - $start);
+$x = 10;
+while ($x--) {
+    $start = microtime(true);
+    $i = 100000;
+    while ($i--) {
+        $num = 3532 * 3278543;
+    }
+    printf("Used %s S\n", microtime(true) - $start);
+
+    $start = microtime(true);
+    $i = 100000;
+    while ($i--) {
+        $num = QuickMul(3532, 3278543);
+    }
+    printf("Used %s S\n", microtime(true) - $start);
+    echo PHP_EOL;
+}
