@@ -158,7 +158,7 @@ class BinarySortedTree
 }
 
 /**
- * 前序遍历,根左右 
+ * 前序遍历,根左右
  * @param Node $tree
  * @return void
  */
@@ -173,7 +173,7 @@ function preOrderTraverse($tree)
 }
 
 /**
- * 中序遍历,左根右 
+ * 中序遍历,左根右
  * @param Node $tree
  * @return void
  */
@@ -204,9 +204,9 @@ function postOrderTraverse($tree)
 
 
 $tree = new BinarySortedTree();
-for ($i = 0; $i < 2000; $i++) {
-    $tree->insert(random_int(1, 10000));
-}
+// for ($i = 0; $i < 2000; $i++) {
+//     $tree->insert(random_int(1, 10000));
+// }
 // $tree->insert(3);
 // $tree->insert(2);
 // $tree->insert(5);
@@ -219,11 +219,21 @@ for ($i = 0; $i < 2000; $i++) {
 // $tree->insert(8);
 // $tree->insert(24);
 // $tree->insert(87);
+$tree->insert(12);
+$tree->insert(5);
+$tree->insert(18);
+$tree->insert(2);
+$tree->insert(9);
+$tree->insert(8);
+$tree->insert(15);
+$tree->insert(19);
+$tree->insert(17);
+$tree->insert(16);
 // midOrderTraverse($tree->getTree());
-// echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+// echo PHP_EOL;
 // preOrderTraverse($tree->getTree());
-// echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-// postOrderTraverse($tree->getTree());
+// echo PHP_EOL;
+postOrderTraverse($tree->getTree());
 // var_dump($tree->find(random_int(1, 1000)));
 // echo $tree->find(random_int(1, 10000));
 
