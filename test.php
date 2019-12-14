@@ -1,4 +1,7 @@
 <?php
+
+require 'vendor/autoload.php';
+
 // function foo(&$param)
 // {
 //     $param = 42;
@@ -91,7 +94,7 @@ class Test
 // }
 // printf("Used %ss\n", microtime(true) - $start);
 
-$arr = new SplFixedArray(10);
-for ($i = 0; $i < 10; $i++) {
-    $arr[$i] = $i;
-}
+// $arr = new SplFixedArray(10);
+// for ($i = 0; $i < 10; $i++) {
+//     $arr[$i] = $i;
+// }
