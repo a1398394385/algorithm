@@ -34,7 +34,7 @@ require '../vendor/autoload.php';
  * 6     7      8
  * 9     10     11
  */
-function convert(string $str, int $number = 0)
+function ZTransformation(string $str, int $number = 0)
 {
     $str = str_split($str);
     $count = count($str);
@@ -61,4 +61,4 @@ function convert(string $str, int $number = 0)
 // TODO:Test
 $str = 'LEETCODEISHIRING';
 $str = 'LEETCODEISHIRINGA';
-dd(convert($str, 3));
+dd(ZTransformation($str, 3));
