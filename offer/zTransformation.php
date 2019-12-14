@@ -49,12 +49,11 @@ function ZTransformation(string $str, int $number = 0)
     $divisor = ($number - 1) * 2;
     foreach ($str as $key => $value) {
         $index = fmod($key, $divisor);
-        $result[$index][$key] = $value;
+        $result[$index] = $result[$index] ?? '';
+        $result[$index] .= $value;
     }
-    $result = array_reduce($result, function ($carry = '', $item) {
-        $carry .= implode('', $item);
-        return $carry;
-    });
+    $result = implode('', $result);
+
     return $result;
 }
 
