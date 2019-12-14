@@ -9,7 +9,7 @@ require '../vendor/autoload.php';
  * E T O E S I I G
  * E   D   H   N
  *
- * 0   4   8    12
+ * 0   4   8    12    16
  * 1 3 5 7 9 11 13 15
  * 2   6   10   14
  *
@@ -48,12 +48,13 @@ function ZTransformation(string $str, int $number = 0)
 
     $divisor = ($number - 1) * 2;
     foreach ($str as $key => $value) {
-        $num1 = floor($key / $divisor);
-        $num2 = fmod($key, $divisor);
-        $result[$num1 + ($num2 * $divisor)] = $value;
+        $index = fmod($key, $divisor);
+        $result[$index][$key] = $value;
     }
-    ksort($result);
-    $result = implode('', $result);
+    $result = array_reduce($result, function ($carry = '', $item) {
+        $carry .= implode('', $item);
+        return $carry;
+    });
     return $result;
 }
 
