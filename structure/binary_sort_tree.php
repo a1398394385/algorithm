@@ -93,7 +93,7 @@ class BinarySortedTree
                 return $p;
             }
         }
-        return '无该节点';
+        return null;
     }
 
     /**
