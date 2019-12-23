@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * 获取输入数组中最小的 K 个数
+ *
+ * @param array $input
+ * @param int $k
+ * @return array
+ */
 function GetLeastNumbers_Solution($input, $k)
 {
     $queue = new SplPriorityQueue();
