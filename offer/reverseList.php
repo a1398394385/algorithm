@@ -20,6 +20,7 @@ function ReverseList($pHead)
 
     $head = ReverseList($pHead->next);
     $pHead->next->next = $pHead;
+    $pHead->next = null;
     return $head;
 }
 
