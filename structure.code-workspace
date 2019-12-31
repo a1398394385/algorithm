@@ -93,6 +93,7 @@
 			"typeindex": "cpp",
 			"typeinfo": "cpp",
 			"valarray": "cpp"
-		}
+		},
+		"cSpell.language": "en"
 	}
 }
