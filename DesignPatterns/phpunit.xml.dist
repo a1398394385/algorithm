@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="Design Patterns">
+            <directory suffix="Test.php">Behavioral/*/Tests</directory>
+            <directory suffix="Test.php">Creational/*/Tests</directory>
+            <directory suffix="Test.php">More/*/Tests</directory>
+            <directory suffix="Test.php">Structural/*/Tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist  processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">Behavioral</directory>
+            <directory suffix=".php">Creational</directory>
+            <directory suffix=".php">More</directory>
+            <directory suffix=".php">Structural</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="./CodeCoverage" />
+    </logging>
+</phpunit>

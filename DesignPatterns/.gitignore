@@ -1,0 +1,13 @@
+# IDE
+/.idea
+
+# PHPUnit
+phpunit.xml
+/.phpunit.result.cache
+/CodeCoverage
+
+# build
+composer.phar
+composer.lock
+/vendor/
+/_build/
