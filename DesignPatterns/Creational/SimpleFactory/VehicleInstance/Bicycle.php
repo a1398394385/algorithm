@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DesignPatterns\Creational\SimpleFactory\VehicleInstance;
+namespace DesignPatterns\Creational\SimpleFactory\Vehicle;
 
 use DesignPatterns\Creational\SimpleFactory\VehicleInterface;
 

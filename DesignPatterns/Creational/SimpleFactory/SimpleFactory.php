@@ -29,7 +29,7 @@ class SimpleFactory
      */
     public function __construct()
     {
-        $handler = opendir(__DIR__ . '\\VehicleInstance');
+        $handler = opendir(__DIR__ . '\\Vehicle');
         while (($filename = readdir($handler)) !== false) {
             if ($filename != "." && $filename != "..") {
                 $vehicles[] = explode('.', $filename)[0];
@@ -38,7 +38,7 @@ class SimpleFactory
         closedir($handler);
 
         foreach ($vehicles as $vehicle) {
-            $this->typeList[$vehicle] = __NAMESPACE__ . '\\VehicleInstance\\' . $vehicle;
+            $this->typeList[$vehicle] = __NAMESPACE__ . '\\Vehicle\\' . $vehicle;
         }
     }
 
