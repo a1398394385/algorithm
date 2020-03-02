@@ -29,7 +29,7 @@ class SimpleFactory
      */
     public function __construct()
     {
-        $handler = opendir(__DIR__ . '\\Vehicle');
+        $handler = opendir(__DIR__ . '\\VehicleInstance');
         while (($filename = readdir($handler)) !== false) {
             if ($filename != "." && $filename != "..") {
                 $vehicles[] = explode('.', $filename)[0];
