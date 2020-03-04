@@ -1,6 +1,10 @@
 # IDE
 /.idea
 
+#VScode
+*.code-workspace
+/.vscode
+
 # PHPUnit
 phpunit.xml
 /.phpunit.result.cache
