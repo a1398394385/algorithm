@@ -1,6 +1,7 @@
 /vendor
-newfile.*
-/GO
+/.idea
+/.vscode
 /.history
-*.class
+newFile.*
 Solution.*
+tempCodeRunnerFile.*
