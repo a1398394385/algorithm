@@ -1,3 +1,6 @@
 /vendor
-/*/newfile.*
+newfile.*
 /GO
+/.history
+*.class
+Solution.*

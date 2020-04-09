@@ -3,21 +3,18 @@
 function movingCount($threshold, $rows, $cols)
 {
     $result = 0;
-    $temp = $threshold;
-    $cap = 1;
-    while ($temp) {
-        $cap *= 10;
-        $temp = floor($temp / 10);
-    }
-    for ($i = 0; $i < $rows && $i < $cap; $i++) {
+    $capX = $threshold > 8 ? ($threshold - 7) * 10 : 10;
+    for ($i = 0; $i < $rows && $i < $capX; $i++) {
         $temp = sum($i);
-        for ($j = 0; $j < $cols && $j < $cap; $j++) {
+        $capY = $capX - floor($i / 10) * 10;
+        for ($j = 0; $j < $cols && $j < $capY; $j++) {
             if ($temp + sum($j) <= $threshold)
                 $result += 1;
         }
     }
     return $result;
 }
+
 
 function movingCount1($threshold, $rows, $cols)
 {
@@ -47,13 +44,16 @@ function sum($num)
 
 // TODO: test
 $i = 1;
+$rows = 10000;
+$cols = 10000;
+$threshold = 1;
 while ($i <= 10 && $i++) {
     $start = microtime(true);
-    echo movingCount(450, 600, 600) . '  ';
+    echo movingCount($threshold, $rows, $cols) . '  ';
     printf("Used %sS\n", microtime(true) - $start);
 
     $start = microtime(true);
-    echo movingCount1(450, 600, 600) . '  ';
+    echo movingCount1($threshold, $rows, $cols) . '  ';
     printf("Used %sS\n", microtime(true) - $start);
 
     echo PHP_EOL;
