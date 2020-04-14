@@ -94,6 +94,12 @@
 			"typeinfo": "cpp",
 			"valarray": "cpp"
 		},
-		"cSpell.language": "en"
+		"cSpell.language": "en",
+		"files.exclude": {
+			"**/.classpath": true,
+			"**/.project": true,
+			"**/.settings": true,
+			"**/.factorypath": true
+		}
 	}
 }
