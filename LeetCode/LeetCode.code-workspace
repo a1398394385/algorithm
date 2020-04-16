@@ -23,7 +23,8 @@
             "**/.classpath": true,
             "**/.project": true,
             "**/.settings": true,
-            "**/.factorypath": true
+            "**/.factorypath": true,
+            "**/.history": true
         }
     }
 }
