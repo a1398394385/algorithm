@@ -6,20 +6,6 @@
     ],
     "settings": {
         "sync.gist": "f6387ab1643b68bf9b128001b4f58eee",
-        "sqltools.connections": [
-            {
-                "connectionTimeout": 20,
-                "database": "tpblog",
-                "dialect": "MySQL",
-                "isActive": true,
-                "isConnected": true,
-                "name": "tpblog",
-                "password": "laragon",
-                "port": 3306,
-                "server": "localhost",
-                "username": "root"
-            }
-        ],
         "svn.ignoreMissingSvnWarning": true,
         "files.associations": {
             "array": "cpp",
@@ -101,6 +87,11 @@
             "**/.settings": true,
             "**/.factorypath": true,
             "**/.history": true,
+        },
+        "java.format.settings.url": "C:\\GitHub\\eclipse-java-XYS-style.xml",
+        "[java]": {
+            "editor.fontFamily": "Cascadia Code, Consolas, 'Courier New', monospace",
+            "editor.suggest.snippetsPreventQuickSuggestions": false
         }
     }
 }
