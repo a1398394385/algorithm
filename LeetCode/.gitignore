@@ -1,6 +1,3 @@
-/.idea
-/.vscode
-/.history
 /debug
 .vscodeignore
 *.class
