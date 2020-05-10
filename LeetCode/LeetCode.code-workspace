@@ -35,9 +35,5 @@
         "java.import.gradle.user.home": "",
         "java.import.gradle.version": "",
         "java.format.settings.url": "C:\\laragon\\www\\eclipse-java-XYS-style.xml",
-        "[java]": {
-            "editor.fontFamily": "Cascadia Code, Consolas, 'Courier New', monospace",
-            "editor.suggest.snippetsPreventQuickSuggestions": false
-        },
     },
 }
