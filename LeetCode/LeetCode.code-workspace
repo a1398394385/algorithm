@@ -26,10 +26,18 @@
             "**/.factorypath": true,
             "**/.history": true
         },
-        "java.format.settings.url": "C:\\GitHub\\eclipse-java-XYS-style.xml",
+        "java.configuration.maven.userSettings": "",
+        "java.contentProvider.preferred": "",
+        "java.format.settings.profile": "",
+        "java.import.gradle.arguments": "",
+        "java.import.gradle.home": "",
+        "java.import.gradle.jvmArguments": "",
+        "java.import.gradle.user.home": "",
+        "java.import.gradle.version": "",
+        "java.format.settings.url": "C:\\laragon\\www\\eclipse-java-XYS-style.xml",
         "[java]": {
             "editor.fontFamily": "Cascadia Code, Consolas, 'Courier New', monospace",
             "editor.suggest.snippetsPreventQuickSuggestions": false
-        }
-    }
+        },
+    },
 }
