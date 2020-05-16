@@ -28,7 +28,7 @@
         },
         "java.configuration.maven.userSettings": "",
         "java.contentProvider.preferred": "",
-        "java.format.settings.profile": "",
+        "java.format.settings.profile": "XYS-Style",
         "java.import.gradle.arguments": "",
         "java.import.gradle.home": "",
         "java.import.gradle.jvmArguments": "",
