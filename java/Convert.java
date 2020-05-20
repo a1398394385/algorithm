@@ -1,3 +1,5 @@
+package java;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -5,7 +7,7 @@ import java.util.stream.Collectors;
 public class Convert
 {
     public static void main(String[] args) {
-        int[] data = { 4, 5, 3, 6, 2, 5, 1 };
+        int[] data = {4, 5, 3, 6, 2, 5, 1};
 
         // int[] 转 List<Integer>
         List<Integer> list1 = Arrays.stream(data).boxed().collect(Collectors.toList());
@@ -41,7 +43,7 @@ public class Convert
         // 最简单的方式。String[]转List<String>也同理。
 
         // 同理
-        String[] strings1 = { "a", "b", "c" };
+        String[] strings1 = {"a", "b", "c"};
         // String[] 转 List<String>
         List<String> list3 = Arrays.asList(strings1);
         // List<String> 转 String[]

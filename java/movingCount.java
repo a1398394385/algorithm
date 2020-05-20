@@ -1,4 +1,6 @@
-class Solution
+package java;
+
+class movingCount
 {
     public int movingCount(int m, int n, int k) {
         int result = 0;
@@ -8,10 +10,9 @@ class Solution
             int temp = sum(i);
             int capY = capX - (i / 10) * 10;
 
-            for (int j = 0; j < n && j < capY; j++) {
+            for (int j = 0; j < n && j < capY; j++)
                 if (temp + sum(j) <= k)
                     result += 1;
-            }
         }
         return result;
     }
@@ -21,7 +22,7 @@ class Solution
 
         while (num > 0) {
             result += num % 10;
-            num    /= 10;
+            num /= 10;
         }
         return result;
     }
