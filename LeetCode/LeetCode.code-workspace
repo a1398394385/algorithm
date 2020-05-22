@@ -24,16 +24,11 @@
             "**/.project": true,
             "**/.settings": true,
             "**/.factorypath": true,
-            "**/.history": true
+            "**/.history": true,
+            "**/*.class": true
         },
-        "java.configuration.maven.userSettings": "",
-        "java.contentProvider.preferred": "",
         "java.format.settings.profile": "XYS-Style",
-        "java.import.gradle.arguments": "",
-        "java.import.gradle.home": "",
-        "java.import.gradle.jvmArguments": "",
-        "java.import.gradle.user.home": "",
-        "java.import.gradle.version": "",
         "java.format.settings.url": "C:\\laragon\\www\\eclipse-java-XYS-style.xml",
+        "java.server.launchMode": "Standard",
     },
 }

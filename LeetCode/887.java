@@ -1,6 +1,7 @@
 import java.util.Arrays;
 
-class Solution {
+class Solution
+{
     public int[][] cache;
 
     public static void main(String[] args) {
@@ -68,6 +69,13 @@ class Solution {
         return m;
     }
 
+    /**
+     * 决策单调性
+     * 
+     * @param K 鸡蛋个数
+     * @param N 楼层数
+     * @return
+     */
     public int dp3(int K, int N) {
         // Right now, dp[i] represents dp(1, i)
         int[] dp = new int[N + 1];
