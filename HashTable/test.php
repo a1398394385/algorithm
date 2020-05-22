@@ -34,34 +34,18 @@ $hashTable = new HashTable;
 $faker = Faker\Factory::create();
 $value = 'value';
 $arr = [];
+
 // 50000 => 110 +- 5 S;
 for ($i = 0; $i < 50000; $i++) {
     $arr[] = $faker->name;
 }
 
-
-//$start = microtime(true);
-//foreach ($arr as $item) {
-//    \HashTable\getHash($item);
-//}
-//printf("getHash() Used %sS\n", microtime(true) - $start);
-//echo '<br>' . PHP_EOL;
-//
-//
-//$start = microtime(true);
-//foreach ($arr as $item) {
-//    \HashTable\hash_fun($item);
-//}
-//printf("hash_fun() Used %sS\n", microtime(true) - $start);
-//echo '<br>' . PHP_EOL;
-
-
+$handle = fopen("name.txt", 'a+');
 $start = microtime(true);
 foreach ($arr as $item) {
-    $hashTable->create($item, $value);
+    fwrite($handle, "$item \r\n");
+    // $hashTable->create($item, $value);
 }
-printf("create() Used %sS\n", microtime(true) - $start);
-echo '<br>' . PHP_EOL;
-echo $hashTable->nNumOfNode;
-echo '<br>' . PHP_EOL;
-echo $hashTable->nTableSize;
+printf("create() Used %sS \r\n", microtime(true) - $start);
+printf("number of node %d \r\n", $hashTable->nNumOfNode);
+printf("size of hashTable %d \r\n", $hashTable->nTableSize);

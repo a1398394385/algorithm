@@ -48,10 +48,10 @@ function getHash(string $str)
     $arr    = array_map(function ($value) {     // char to ASCII
         return ord($value);
     }, $arr);
-    $lenght = count($arr);
-    $index  = $lenght - 1;
+    $length = count($arr);
+    $index  = $length - 1;
 
-    while ($lenght >= 8) {
+    while ($length >= 8) {
         $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;   // We only need the lower 32 bits
         $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
         $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
@@ -60,10 +60,10 @@ function getHash(string $str)
         $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
         $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
         $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
-        $lenght -= 8;
+        $length -= 8;
     }
 
-    switch ($lenght) {
+    switch ($length) {
         case 7:
             $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
         case 6:
@@ -101,10 +101,10 @@ function hash_fun(string $str)
     $arr    = array_map(function ($value) {
         return ord($value);
     }, $arr);
-    $lenght = count($arr);
-    $index  = $lenght - 1;
+    $length = count($arr);
+    $index  = $length - 1;
 
-    while ($lenght >= 8) {
+    while ($length >= 8) {
         $hash   = (($hash << 5) + $hash) + $arr[$index--];
         $hash   = (($hash << 5) + $hash) + $arr[$index--];
         $hash   = (($hash << 5) + $hash) + $arr[$index--];
@@ -113,10 +113,10 @@ function hash_fun(string $str)
         $hash   = (($hash << 5) + $hash) + $arr[$index--];
         $hash   = (($hash << 5) + $hash) + $arr[$index--];
         $hash   = (($hash << 5) + $hash) + $arr[$index--];
-        $lenght -= 8;
+        $length -= 8;
     }
 
-    switch ($lenght) {
+    switch ($length) {
         case 7:
             $hash = (($hash << 5) + $hash) + $arr[$index--];
         case 6:
