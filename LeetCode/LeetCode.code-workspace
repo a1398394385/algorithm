@@ -17,7 +17,9 @@
             "unordered_set": "cpp",
             "vector": "cpp",
             "initializer_list": "cpp",
-            "valarray": "cpp"
+            "valarray": "cpp",
+            "algorithm": "cpp",
+            "iostream": "cpp"
         },
         "files.exclude": {
             "**/.classpath": true,
