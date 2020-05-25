@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Solution
+class Solution
 {
     public HashMap<Integer, List<Integer>> map;
     public int[] colors;
