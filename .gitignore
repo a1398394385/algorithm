@@ -2,6 +2,7 @@
 **/.idea
 **/.vscode
 **/.history
+*.class
 Solution.*
 tempCodeRunnerFile.*
 composer.lock

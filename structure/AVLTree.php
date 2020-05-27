@@ -1,5 +1,7 @@
 <?php
 
+require_once 'C:\laragon\www\datastructure\vendor\autoload.php';
+
 class AVLNode
 {
     public $data;             // 节点数据
@@ -34,9 +36,9 @@ class AVLTree
     /**
      * @param int $data
      */
-    public function insert(int $data)
+    public function insert(int $data): bool
     {
-        $this->insert_node($data, $this->root);
+        return $this->insert_node($data, $this->root);
     }
 
     /**
@@ -45,7 +47,7 @@ class AVLTree
      * @param AVLNode $tree
      * @return bool
      */
-    protected function insert_node(int $data, &$tree)
+    protected function insert_node(int $data, &$tree): bool
     {
         if (!$tree) {
             $tree = new AVLNode($data);
@@ -98,7 +100,7 @@ class AVLTree
      * 右旋操作
      * @param AVLNode $tree
      */
-    protected function right_rotate(&$tree)
+    protected function right_rotate(&$tree): void
     {
         $subTree = $tree->left;  // 将子树的左节点作为新的子树根节点
         if ($tree->parent) {
@@ -162,7 +164,7 @@ class AVLTree
      * 左子树平衡旋转处理
      * @param AVLNode $tree
      */
-    protected function left_balance(&$tree)
+    protected function left_balance(&$tree): void
     {
         $subTree = $tree->left;
         switch ($subTree->bf) {
@@ -230,15 +232,24 @@ class AVLTree
 
 
 $avlTree = new AVLTree();
-$avlTree->insert(3);
-$avlTree->insert(2);
-$avlTree->insert(1);
-$avlTree->insert(4);
-$avlTree->insert(5);
 $avlTree->insert(6);
+$avlTree->insert(3);
 $avlTree->insert(7);
-$avlTree->insert(10);
-$avlTree->insert(9);
-$avlTree->insert(8);
-midOrderTraverse($avlTree->getTree());  // 中序遍历生成的二叉树看是否是二叉排序树
-print_r($avlTree->getTree());           // 以数组形式打印构建的二叉树看是否是平衡二叉树
+$avlTree->insert(2);
+$avlTree->insert(5);
+$avlTree->insert(4);
+dd($avlTree->getTree());
+
+
+// $avlTree->insert(3);
+// $avlTree->insert(2);
+// $avlTree->insert(1);
+// $avlTree->insert(4);
+// $avlTree->insert(5);
+// $avlTree->insert(6);
+// $avlTree->insert(7);
+// $avlTree->insert(10);
+// $avlTree->insert(9);
+// $avlTree->insert(8);
+// midOrderTraverse($avlTree->getTree());  // 中序遍历生成的二叉树看是否是二叉排序树
+// dd($avlTree->getTree());
