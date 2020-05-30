@@ -27,7 +27,8 @@
             "**/.settings": true,
             "**/.factorypath": true,
             "**/.history": true,
-            "**/*.class": true
+            "**/*.class": true,
+            "**/*.exe": true,
         },
         "java.format.settings.profile": "XYS-Style",
         "java.format.settings.url": "C:\\laragon\\www\\eclipse-java-XYS-style.xml",
