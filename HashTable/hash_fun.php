@@ -52,32 +52,32 @@ function getHash(string $str)
     $index  = $length - 1;
 
     while ($length >= 8) {
-        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;   // We only need the lower 32 bits
-        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
-        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
-        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
-        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
-        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
-        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
-        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;   // We only need the lower 32 bits
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
+        $hash   = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
         $length -= 8;
     }
 
     switch ($length) {
         case 7:
-            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
         case 6:
-            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
         case 5:
-            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
         case 4:
-            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
         case 3:
-            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
         case 2:
-            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
         case 1:
-            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 4294967295;
+            $hash = (($hash + ($hash << 5)) + $arr[$index--]) & 0xFFFFFFFF;
             break;
         case 0:
             break;
