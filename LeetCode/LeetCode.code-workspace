@@ -19,7 +19,8 @@
             "initializer_list": "cpp",
             "valarray": "cpp",
             "algorithm": "cpp",
-            "iostream": "cpp"
+            "iostream": "cpp",
+            "*.tcc": "cpp"
         },
         "files.exclude": {
             "**/.classpath": true,

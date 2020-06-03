@@ -10,6 +10,7 @@ class Solution
     }
 
     public int maxSubArray1(int[] nums) {
+        int[] x = new int[2];
         int pre = 0;
         int maxAns = nums[0];
         for (int num : nums) {

@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-class Twitter {
+class Twitter
+{
     /**
      * 用户关注列表
      */
