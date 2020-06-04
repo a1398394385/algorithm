@@ -23,13 +23,18 @@
             "*.tcc": "cpp"
         },
         "files.exclude": {
+            "**/.git": true,
+            "**/.svn": true,
+            "**/.hg": true,
+            "**/CVS": true,
+            "**/.DS_Store": true,
+            "**/.history": true,
             "**/.classpath": true,
             "**/.project": true,
             "**/.settings": true,
             "**/.factorypath": true,
-            "**/.history": true,
             "**/*.class": true,
-            "**/*.exe": true,
+            "**/*.exe": true
         },
         "cSpell.words": [
             "Cascadia",
@@ -43,5 +48,6 @@
         "java.format.settings.url": "C:\\laragon\\www\\eclipse-java-XYS-style.xml",
         "java.server.launchMode": "Standard",
         "java.completion.maxResults": 60,
+        "explorerExclude.backup": null,
     },
 }
