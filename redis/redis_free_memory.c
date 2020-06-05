@@ -108,8 +108,7 @@ int freeMemoryIfNeeded(void)
 
 					de = dictGetRandomKey(dict);   // 获取一个随机值
 					thiskey = dictGetEntryKey(de); // 获取这个值的 key
-					/* When policy is volatile-lru we need an additonal lookup
-                     * to locate the real key, as dict is set to db->expires. */
+					/* When policy is volatile-lru we need an additonal lookup to locate the real key, as dict is set to db->expires. */
 					// 当策略是 volatile-lru 时，需要一次额外的查找来定位真正的键,因为dict被设置为 db->expires。
 					if (server.maxmemory_policy == REDIS_MAXMEMORY_VOLATILE_LRU)
 						// 因为dict->expires维护的数据结构里并没有记录该key的最后访问时间
@@ -126,7 +125,7 @@ int freeMemoryIfNeeded(void)
 					}
 				}
 				// 为了减少运算量,redis的lru算法和expire淘汰算法一样，都是非最优解
-				// lru算法是在相应的dict中，选择maxmemory_samples(默认设置是3)份key，挑选其中lru的，进行淘汰
+				// lru算法是在相应的dict中，选择maxmemory_samples(默认设置是5)份key，挑选其中lru的，进行淘汰
 			}
 			// 如果是ttl策略。就取maxmemory_samples个键, 比较他们的过期时间
 			// 从这些键中找到最快过期的那个键，就是我们将要删除的键。
