@@ -18,8 +18,4 @@ class Solution
         if ((n & 1) == 1) return mid * mid * x;
         return mid * mid;
     }
-
-    public static void main(String[] args) {
-        Solution.myPow(2.00000, 10);
-    }
 }
