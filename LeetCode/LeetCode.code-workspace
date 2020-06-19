@@ -96,8 +96,9 @@
             "Cascadia",
             "Consolas",
             "monospace",
+            "numpy",
             "nums",
-            "subarray",
+            "subarray"
         ],
         "C_Cpp.errorSquiggles": "Disabled",
         "java.format.settings.profile": "XYS-Style",
@@ -105,5 +106,7 @@
         "java.server.launchMode": "Standard",
         "java.completion.maxResults": 60,
         "commentTranslate.targetLanguage": "zh-CN",
+        "local-history.daysLimit": 1,
+        "local-history.maxDisplay": 20,
     },
 }
