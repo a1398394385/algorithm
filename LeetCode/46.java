@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Solution
+class Solution
 {
     public List<List<Integer>> permute(int[] nums) {
         List<Integer> numbers = Arrays.stream(nums).boxed().collect(Collectors.toList());
@@ -52,6 +52,6 @@ public class Solution
     public static void main(String[] args) {
         Solution test = new Solution();
         // test.permute(new int[] { 1, 2, 3 });
-        System.out.println(test.permute(new int[] { 0, 1 }));
+        System.out.println(test.permute(new int[] {0, 1}));
     }
 }
