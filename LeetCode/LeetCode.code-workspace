@@ -79,12 +79,7 @@
             "typeinfo": "cpp"
         },
         "files.exclude": {
-            "**/.git": true,
-            "**/.svn": true,
-            "**/.hg": true,
-            "**/CVS": true,
-            "**/.DS_Store": true,
-            "**/.history": true,
+            "**/.history": false,
             "**/.classpath": true,
             "**/.project": true,
             "**/.settings": true,
@@ -106,7 +101,5 @@
         "java.server.launchMode": "Standard",
         "java.completion.maxResults": 60,
         "commentTranslate.targetLanguage": "zh-CN",
-        "local-history.daysLimit": 1,
-        "local-history.maxDisplay": 20,
     },
 }
