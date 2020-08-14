@@ -79,7 +79,7 @@
             "typeinfo": "cpp"
         },
         "files.exclude": {
-            "**/.history": false,
+            "**/.history": true,
             "**/.classpath": true,
             "**/.project": true,
             "**/.settings": true,
@@ -101,5 +101,7 @@
         "java.server.launchMode": "Standard",
         "java.completion.maxResults": 60,
         "commentTranslate.targetLanguage": "zh-CN",
+        "java.debug.settings.forceBuildBeforeLaunch": false,
+        "java.debug.settings.console": "integratedTerminal",
     },
 }
