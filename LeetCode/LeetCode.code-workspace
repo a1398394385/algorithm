@@ -97,7 +97,7 @@
         ],
         "C_Cpp.errorSquiggles": "Disabled",
         "java.format.settings.profile": "XYS-Style",
-        "java.format.settings.url": "C:\\laragon\\www\\eclipse-java-XYS-style.xml",
+        "java.format.settings.url": "http://file.mr-xys.top/eclipse-java-XYS-style.xml",
         "java.server.launchMode": "Standard",
         "java.completion.maxResults": 60,
         "commentTranslate.targetLanguage": "zh-CN",
