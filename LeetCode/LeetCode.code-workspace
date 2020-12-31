@@ -103,5 +103,6 @@
         "commentTranslate.targetLanguage": "zh-CN",
         "java.debug.settings.forceBuildBeforeLaunch": false,
         "java.debug.settings.console": "integratedTerminal",
+        "python.languageServer": "Microsoft",
     },
 }
