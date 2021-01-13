@@ -1,52 +1,73 @@
 #include <bits/stdc++.h>
-using namespace std;
 #define MAX 50005
+using namespace std;
 
-int n, m, a, b, sig = 0, curr = 0, top = -1, result = 0;
-int dfn[MAX], low[MAX], flag[MAX], color[MAX];
-vector<int> _map[MAX], sigMap[MAX];
-stack<int> _stack;
+int n, m, a, b;
+
+struct edge {
+    int to;
+    int next;
+} _map[MAX];
+int head[MAX], cnt;
+
+int idx, dfn[MAX], low[MAX];
+
+vector<int> sigMap[MAX];
+int tops[MAX], topIdx, top, sig, color[MAX];
+bool flag[MAX];
+
+void add(int u, int v) {
+    _map[++cnt].to = v;
+    _map[cnt].next = head[u];
+    head[u] = cnt;
+}
 
 void tarjan(int u) {
-    flag[u] = 1;
-    _stack.push(u);
-    dfn[u] = low[u] = curr++;
-    for (int v : _map[u]) {
-        if (flag[v] == 0) tarjan(v);
-        if (flag[v] == 1) low[u] = min(low[v], low[u]);
+    dfn[u] = low[u] = ++idx;
+    // 当前节点入栈
+    tops[topIdx++] = u;
+    for (int side = head[u]; side != 0; side = _map[side].next) {
+        int v = _map[side].to;
+        // 递归处理直连节点
+        if (dfn[v] == 0) tarjan(v);
+        // 直连边更新可达最大祖先节点
+        if (!flag[v]) low[u] = min(low[v], low[u]);
     }
-    if (low[u] == dfn[u]) {
+    // 强连通分量首节点
+    if (dfn[u] == low[u]) {
         sig++;
+        // 遍历栈
         do {
-            top = _stack.top();
+            top = tops[--topIdx];
+            // 染色
             color[top] = sig;
-            flag[top] = -1;
+            flag[top] = true;
             sigMap[sig].push_back(top);
-            _stack.pop();
         } while (top != u);
     }
 }
 
+// 出度是否为0
 bool isZero(int sig) {
     for (int u : sigMap[sig]) {
-        for (int v : _map[u]) {
-            if (color[u] != color[v]) {
-                return false;
-            }
+        for (int side = head[u]; side != 0; side = _map[side].next) {
+            int v = _map[side].to;
+            if (color[u] != color[v]) return false;
         }
     }
     return true;
 }
 
-int main() {
+int main(int argc, char const *argv[]) {
     scanf("%d%d", &n, &m);
-    while (m--) {
+    for (register int i = 1; i <= m; i++) {
         scanf("%d%d", &a, &b);
-        _map[a].push_back(b);
+        add(a, b);
     }
-    for (register int i = 1; i <= n; i++) {
-        if (flag[i] == 0) tarjan(i);
+    for (register int u = 1; u <= n; u++) {
+        if (dfn[u] == 0) tarjan(u);
     }
+    int result = 0;
     for (register int i = 1; i <= sig; i++) {
         if (isZero(i)) {
             if (result != 0) {
