@@ -3,6 +3,6 @@
 **/.vscode
 **/.history
 *.class
-Solution.*
+Solution*.*
 tempCodeRunnerFile.*
 composer.lock

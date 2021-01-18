@@ -1,5 +1,5 @@
 /debug
-.vscodeignore
+.vscode/
 *.class
 *.o
 *.exe
