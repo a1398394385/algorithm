@@ -1,6 +1,7 @@
 /debug
-.vscodeignore
+.vscode/
 *.class
 *.o
 *.exe
 a.out
+*.txt

@@ -20,11 +20,11 @@ class Heap
         $this->count++;
         $this->a[$this->count] = $data;
         $i = $this->count;
-        while (floor($i / 2) > 0 && $this->a[floor($i / 2)] > $this->a[$i]) {
+        while (($i >> 1) > 0 && $this->a[$i >> 1] > $this->a[$i]) {
             $temp = $this->a[$i];
-            $this->a[$i] = $this->a[floor($i / 2)];
-            $this->a[floor($i / 2)] = $temp;
-            $i = floor($i / 2);
+            $this->a[$i] = $this->a[$i >> 1];
+            $this->a[$i >> 1] = $temp;
+            $i = $i >> 1;
         }
         return true;
     }
@@ -39,10 +39,10 @@ class Heap
         $i = 1;  // 堆顶元素
         while (true) {
             $maxPos = $i;
-            if ($i * 2 <= $this->count && $this->a[$i * 2] > $this->a[$i]) {
+            if (($i << 1) <= $this->count && $this->a[$i << 1] > $this->a[$i]) {
                 $maxPos = 2 * $i;
             }
-            if ($i * 2 + 1 <= $this->count && $this->a[$i * 2 + 1] > $this->a[$maxPos]) {
+            if (($i << 1) + 1 <= $this->count && $this->a[($i << 1) + 1] > $this->a[$maxPos]) {
                 $maxPos = 2 * $i + 1;
             }
             if ($maxPos == $i) {

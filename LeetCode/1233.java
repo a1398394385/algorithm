@@ -7,13 +7,13 @@ import java.util.Set;
 
 class Solution
 {
-    static class TireNode
+    static class TrieNode
     {
         String name;
         boolean isEnd = false;
-        Map<String, TireNode> children = new HashMap<>();
+        Map<String, TrieNode> children = new HashMap<>();
 
-        TireNode(String name) {
+        TrieNode(String name) {
             this.name = name;
         }
     }
@@ -21,16 +21,16 @@ class Solution
     public List<String> result = new ArrayList<>();
 
     public List<String> removeSubfolders(String[] folder) {
-        Map<String, TireNode> map = new HashMap<>();
+        Map<String, TrieNode> map = new HashMap<>();
         for (String path : folder) {
             if (path.length() < 1) continue;
             String[] subFolder = path.split("/");
             if (map.containsKey(subFolder[1]) == false)
-                map.put(subFolder[1], new TireNode(subFolder[1]));
-            TireNode root = map.get(subFolder[1]);
+                map.put(subFolder[1], new TrieNode(subFolder[1]));
+            TrieNode root = map.get(subFolder[1]);
             for (int i = 2; i < subFolder.length; i++) {
                 if (root.children.containsKey(subFolder[i]) == false)
-                    root.children.put(subFolder[i], new TireNode(subFolder[i]));
+                    root.children.put(subFolder[i], new TrieNode(subFolder[i]));
                 root = root.children.get(subFolder[i]);
             }
             root.isEnd = true;
@@ -39,7 +39,7 @@ class Solution
         return result;
     }
 
-    public void dfs(StringBuilder path, Map<String, TireNode> folder) {
+    public void dfs(StringBuilder path, Map<String, TrieNode> folder) {
         folder.forEach((key, value) -> {
             int length = path.length();
             path.append("/").append(value.name);
@@ -51,7 +51,7 @@ class Solution
         });
     }
 
-    public void dfs1(String path, Map<String, TireNode> folder) {
+    public void dfs1(String path, Map<String, TrieNode> folder) {
         folder.forEach((key, value) -> {
             if (value.isEnd)
                 result.add(path + "/" + value.name);

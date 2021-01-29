@@ -1,23 +1,23 @@
 class Solution
 {
-    static class TireNode
+    static class TrieNode
     {
         char value;
-        TireNode[] children = new TireNode[26];
+        TrieNode[] children = new TrieNode[26];
 
-        TireNode(char value) {
+        TrieNode(char value) {
             this.value = value;
         }
     }
 
     public String longestCommonPrefix(String[] strs) {
         if (strs.length == 0) return "";
-        TireNode[] map = new TireNode[26];
+        TrieNode[] map = new TrieNode[26];
         if (strs[0].length() == 0) return "";
         char[] chars = strs[0].toCharArray();
-        TireNode root = map[chars[0] - 'a'] = new TireNode(chars[0]);
+        TrieNode root = map[chars[0] - 'a'] = new TrieNode(chars[0]);
         for (int i = 1; i < chars.length; i++)
-            root = root.children[chars[i] - 'a'] = new TireNode(chars[i]);
+            root = root.children[chars[i] - 'a'] = new TrieNode(chars[i]);
 
         String result = strs[0];
         for (int i = 1; i < strs.length; i++) {

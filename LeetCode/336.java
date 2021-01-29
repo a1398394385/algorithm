@@ -6,14 +6,14 @@ import java.util.Set;
 
 class Solution
 {
-    static class TireNode
+    static class TrieNode
     {
         char value;
         int index = -1;
-        TireNode[] children = new TireNode[26];
+        TrieNode[] children = new TrieNode[26];
         Set<Integer> suffixes = new HashSet<>();
 
-        TireNode(char value) {
+        TrieNode(char value) {
             this.value = value;
         }
     }
@@ -22,14 +22,14 @@ class Solution
         if (words.length == 0) return new ArrayList<>();
 
         int length = words.length;
-        TireNode tree = new TireNode(' ');
+        TrieNode tree = new TrieNode(' ');
         for (int index = 0; index < length; index++) {
             String word = new StringBuilder(words[index]).reverse().toString();
             if (isPalindrome(word.substring(0))) tree.suffixes.add(index);
-            TireNode root = tree;
+            TrieNode root = tree;
             for (int i = 0, len = word.length(); i < len; i++) {
                 if (root.children[word.charAt(i) - 'a'] == null)
-                    root.children[word.charAt(i) - 'a'] = new TireNode(word.charAt(i));
+                    root.children[word.charAt(i) - 'a'] = new TrieNode(word.charAt(i));
                 root = root.children[word.charAt(i) - 'a'];
                 if (isPalindrome(word.substring(i + 1))) root.suffixes.add(index);
             }
@@ -39,7 +39,7 @@ class Solution
         List<List<Integer>> result = new ArrayList<>();
         for (int index = 0; index < length; index++) {
             String word = words[index];
-            TireNode root = tree;
+            TrieNode root = tree;
             for (int i = 0, len = word.length(); i < len; i++) {
                 if (root.index != -1 && root.index != index)
                     if (isPalindrome(word.substring(i)))

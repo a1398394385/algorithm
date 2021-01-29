@@ -5,44 +5,34 @@ int a[600001];
 int t[600001];
 int n, m;
 
-inline int lowbit(int x)
-{
-    return x & (-x);
-}
+inline int lowbit(int x) { return x & (-x); }
 
-inline int accumulate(int x)
-{
+inline int accumulate(int x) {
     int ans = 0;
-    while (x > 0)
-    {
+    while (x > 0) {
         ans += t[x];
         x -= lowbit(x);
     }
     return ans;
 }
 
-inline void update(int x, int value)
-{
-    while (x <= n)
-    {
+inline void update(int x, int value) {
+    while (x <= n) {
         t[x] += value;
         x += lowbit(x);
     }
 }
 
-int main()
-{
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(0), cout.tie(0);
     cin >> n >> m;
-    for (register int i = 1; i <= n; ++i)
-    {
+    for (register int i = 1; i <= n; ++i) {
         cin >> a[i];
         update(i, a[i]);
     }
     int cmd, x, y;
-    for (register int i = 1; i <= m; ++i)
-    {
+    for (register int i = 1; i <= m; ++i) {
         cin >> cmd >> x >> y;
         if (cmd == 1)
             update(x, y);

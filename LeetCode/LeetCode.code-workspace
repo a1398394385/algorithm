@@ -5,6 +5,9 @@
         }
     ],
     "settings": {
+        "[cpp]": {
+            "editor.fontFamily": "Cascadia Code, Consolas, 'Courier New', monospace",
+        },
         "files.associations": {
             "string_view": "cpp",
             "regex": "cpp",
@@ -79,11 +82,6 @@
             "typeinfo": "cpp"
         },
         "files.exclude": {
-            "**/.git": true,
-            "**/.svn": true,
-            "**/.hg": true,
-            "**/CVS": true,
-            "**/.DS_Store": true,
             "**/.history": true,
             "**/.classpath": true,
             "**/.project": true,
@@ -100,13 +98,14 @@
             "nums",
             "subarray"
         ],
-        "C_Cpp.errorSquiggles": "Disabled",
-        "java.format.settings.profile": "XYS-Style",
-        "java.format.settings.url": "C:\\laragon\\www\\eclipse-java-XYS-style.xml",
-        "java.server.launchMode": "Standard",
-        "java.completion.maxResults": 60,
+        "python.languageServer": "Microsoft",
+        "C_Cpp.errorSquiggles": "EnabledIfIncludesResolve",
         "commentTranslate.targetLanguage": "zh-CN",
-        "local-history.daysLimit": 1,
-        "local-history.maxDisplay": 20,
+        "java.format.settings.profile": "XYS-Style",
+        "java.format.settings.url": "http://file.mr-xys.top/eclipse-java-XYS-style.xml",
+        "java.server.launchMode": "Hybrid",
+        "java.completion.maxResults": 60,
+        "java.debug.settings.forceBuildBeforeLaunch": false,
+        "java.debug.settings.console": "integratedTerminal",
     },
 }
