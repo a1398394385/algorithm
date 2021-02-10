@@ -3,6 +3,10 @@
 $stack1 = new SplStack;
 $stack2 = new SplStack;
 
+/**
+ * 剑指 Offer 09
+ * 用两个栈实现队列
+ */
 function mypush($node)
 {
     global $stack1;

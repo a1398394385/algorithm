@@ -22,4 +22,27 @@ class Solution
         if (sum == 1) return true;
         return name(sum);
     }
+
+    public boolean isHappy1(int n) {
+        int fast = n;
+        int slow = n;
+        do {
+            slow = squareSum(slow);
+            fast = squareSum(fast);
+            fast = squareSum(fast);
+        } while (slow != fast);
+        if (fast == 1)
+            return true;
+        else
+            return false;
+    }
+
+    private int squareSum(int m) {
+        int sum = 0;
+        while (m != 0) {
+            sum += (m % 10) * (m % 10);
+            m /= 10;
+        }
+        return sum;
+    }
 }
