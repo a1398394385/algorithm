@@ -2,7 +2,7 @@ import java.util.Stack;
 
 class Solution
 {
-    public static int trap(int[] height) {
+    public int trap(int[] height) {
         int count = height.length;
         int result = 0;
         Stack<int[]> stack = new Stack<>();
@@ -36,16 +36,19 @@ class Solution
         return result;
     }
 
-    public static int trap1(int[] height) {
+    public int trap1(int[] height) {
         int count = height.length;
 
         int[] left = new int[count], right = new int[count];
+        // 位于当前柱子左边最高的柱子
         for (int i = 1; i < count; i++)
             left[i] = height[i - 1] > left[i - 1] ? height[i - 1] : left[i - 1];
+        // 位于当前柱子右边最高的柱子
         for (int i = count - 2; i >= 0; i--)
             right[i] = height[i + 1] > right[i + 1] ? height[i + 1] : right[i + 1];
 
         int result = 0;
+        // 当前柱子垂直正上方区域可以容纳雨水的体积
         for (int i = 0; i < count; i++) {
             int min = left[i] < right[i] ? left[i] : right[i];
             result += min - height[i] > 0 ? min - height[i] : 0;
