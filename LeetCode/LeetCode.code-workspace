@@ -31,6 +31,7 @@
         "java.completion.maxResults": 60,
         "java.debug.settings.forceBuildBeforeLaunch": false,
         "java.debug.settings.console": "integratedTerminal",
+        "java.debug.logLevel": "verbose",
         "files.associations": {
             "string_view": "cpp",
             "regex": "cpp",
@@ -112,5 +113,20 @@
             "nums",
             "subarray"
         ],
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "java",
+                "name": "Launch Current File",
+                "request": "launch",
+                "mainClass": "${file}",
+                "console": "internalConsole",
+                "internalConsoleOptions": "openOnSessionStart",
+                "vmArgs": "-XX:+PrintGC",
+                "shortenCommandLine": "none"
+            }
+        ]
     },
 }
