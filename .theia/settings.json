@@ -1,4 +1,5 @@
 {
+    "editor.formatOnSave": true,
     "[cpp]": {
         "editor.fontFamily": "Cascadia Code, Consolas, 'Courier New', monospace",
     },
