@@ -3,7 +3,14 @@ import java.util.Deque;
 
 public class Solution
 {
-    public static int clumsy(int N) {
+    public int clumsy(int n) {
+        int[] special = new int[] {1, 2, 6, 7};
+        int[] diff = new int[] {1, 2, 2, -1};
+        if (n <= 4) return special[(n - 1) % 4];
+        return n + diff[n % 4];
+    }
+
+    public int clumsy1(int N) {
         Deque<Integer> symbolStack = new ArrayDeque<>();
         Deque<Integer> numberStack = new ArrayDeque<>();
         numberStack.push(N);
@@ -31,9 +38,5 @@ public class Solution
             }
         }
         return numberStack.pop();
-    }
-
-    public static void main(String[] args) {
-        System.err.println(clumsy(10));
     }
 }
